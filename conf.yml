@@ -9,10 +9,10 @@ info:
   description: "A modern glassmorphism dashboard theme for Pterodactyl Panel. Features glass effects, smooth animations, full color customization, SVG backgrounds, live preview, and responsive design."
   flags: ""
   version: "1.0.0"
-  target: "beta-2026-01"
+  target: "beta-2026-06"
   author: "Astro Theme Contributors"
   icon: "public/images/icon.svg"
-  website: "https://github.com/astro-theme/pterodactyl"
+  website: "https://github.com/chaeulso/sen"
 
 admin:
   view: "admin/view.blade.php"
@@ -31,7 +31,7 @@ data:
   console: ""
 
 requests:
-  views: "views"
+  views: ""
   app: "app"
   routers:
     application: ""
