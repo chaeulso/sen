@@ -1,25 +1,10 @@
 {{--
   Astro Theme - Admin Settings Page
   Main Blade template for the extension settings.
-  Located at resources/views/admin/extensions/astrotheme/index.blade.php
+  Blueprint wraps this with its own admin template automatically.
+  DO NOT add @extends or @section — Blueprint handles the layout.
 --}}
 
-@extends('layouts.admin')
-
-@section('title')
-  Astro Theme Settings
-@endsection
-
-@section('content-header')
-  <h1>Astro Theme <small>Customize your panel experience</small></h1>
-  <ol class="breadcrumb">
-    <li><a href="{{ route('admin.index') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li><a href="{{ route('admin.extensions') }}">Extensions</a></li>
-    <li class="active">Astro Theme</li>
-  </ol>
-@endsection
-
-@section('content')
 <div class="astro-admin-settings" id="astro-settings-app">
   {{-- Header --}}
   <div class="astro-admin-header">
@@ -873,4 +858,3 @@ document.getElementById('svg-url-input')?.addEventListener('change', function() 
 // Initial preview render
 setTimeout(updatePreviewFrame, 500);
 </script>
-@endsection
