@@ -86,9 +86,14 @@ class astrothemeExtensionController extends BaseController
         }
 
         return view('admin.extensions.astrotheme.index', [
-            'settings'  => $settings,
-            'defaults'  => self::DEFAULTS,
-            'root'      => '/admin/extensions/astrotheme',
+            'settings'           => $settings,
+            'defaults'           => self::DEFAULTS,
+            'root'               => '/admin/extensions/astrotheme',
+            // Variables required by Blueprint's admin template
+            'blueprint'          => $blueprint,
+            'EXTENSION_NAME'     => 'Astro Theme',
+            'EXTENSION_VERSION'  => '1.0.0',
+            'EXTENSION_ID'       => 'astrotheme',
         ]);
     }
 
