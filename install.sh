@@ -1,194 +1,233 @@
 #!/bin/bash
 
-# Astro Theme - Automated Installation Script
-# Usage: bash install.sh
+# Astro Theme - Simple Installation Script
+# Run this from ANY directory - it auto-detects everything
+# Usage: sudo bash install.sh
 
-set -e  # Exit on error
-
-# Colors for output
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-echo -e "${BLUE}"
-echo "╔════════════════════════════════════════════════════════════╗"
-echo "║                                                            ║"
-echo "║           🌟 Astro Theme Installation Script 🌟           ║"
-echo "║                                                            ║"
-echo "╚════════════════════════════════════════════════════════════╝"
-echo -e "${NC}"
+echo -e "${BLUE}🌟 Astro Theme Installer${NC}"
+echo ""
 
-# Check if running as root
+# Must be root
 if [ "$EUID" -ne 0 ]; then
-    echo -e "${RED}❌ Error: This script must be run as root${NC}"
-    echo "Please run: sudo bash install.sh"
+    echo -e "${RED}❌ Run with: sudo bash install.sh${NC}"
     exit 1
 fi
 
-# Determine Pterodactyl directory
-PTERO_DIR="/var/www/pterodactyl"
-
-if [ ! -d "$PTERO_DIR" ]; then
-    echo -e "${RED}❌ Error: Pterodactyl directory not found at $PTERO_DIR${NC}"
-    echo "Please install Pterodactyl Panel first"
+# Pterodactyl directory
+PTERO="/var/www/pterodactyl"
+if [ ! -d "$PTERO" ]; then
+    echo -e "${RED}❌ Pterodactyl not found at $PTERO${NC}"
     exit 1
 fi
 
-echo -e "${BLUE}📁 Pterodactyl directory: $PTERO_DIR${NC}"
+echo -e "✓ Found Pterodactyl at $PTERO"
 
-# Check if Blueprint is installed
-if ! command -v blueprint &> /dev/null; then
-    echo -e "${RED}❌ Error: Blueprint is not installed${NC}"
-    echo "Please install Blueprint first: https://blueprint.zip/guides/admin/install"
-    exit 1
-fi
-
-echo -e "${GREEN}✓ Blueprint is installed${NC}"
-
-# Navigate to Pterodactyl directory
-cd "$PTERO_DIR"
-
-# Create .blueprint directory structure
-echo -e "${YELLOW}📂 Creating Blueprint directory structure...${NC}"
-mkdir -p .blueprint/dev
-mkdir -p .blueprint/tmp
-echo -e "${GREEN}✓ Directory structure created${NC}"
-
-# Check if extension already exists
-if [ -d ".blueprint/dev/astrotheme" ]; then
-    echo -e "${YELLOW}⚠️  Extension already exists. Updating...${NC}"
-    rm -rf .blueprint/dev/astrotheme
-fi
-
-# Find the extension files
-EXTENSION_SOURCE=""
-
-# Check common locations
-if [ -d "sen" ]; then
-    EXTENSION_SOURCE="sen"
-    echo -e "${GREEN}✓ Found extension in ./sen${NC}"
-elif [ -d "../sen" ]; then
-    EXTENSION_SOURCE="../sen"
-    echo -e "${GREEN}✓ Found extension in ../sen${NC}"
-elif [ -d "$HOME/sen" ]; then
-    EXTENSION_SOURCE="$HOME/sen"
-    echo -e "${GREEN}✓ Found extension in $HOME/sen${NC}"
+# Find the extension files (sen folder)
+SOURCE=""
+if [ -d "$PTERO/sen" ]; then
+    SOURCE="$PTERO/sen"
+elif [ -d "$PTERO/.blueprint/dev/astrotheme" ]; then
+    SOURCE="$PTERO/.blueprint/dev/astrotheme"
+    echo -e "${YELLOW}⚠ Using existing extension in .blueprint/dev/astrotheme${NC}"
 else
-    echo -e "${RED}❌ Error: Cannot find extension files${NC}"
-    echo "Please ensure the 'sen' folder is in one of these locations:"
-    echo "  - /var/www/pterodactyl/sen"
-    echo "  - /var/www/sen"
-    echo "  - ~/sen"
+    echo -e "${RED}❌ Cannot find extension files${NC}"
+    echo "Expected: $PTERO/sen"
     exit 1
 fi
+
+echo -e "✓ Found extension at $SOURCE"
+
+# Check Blueprint
+if ! command -v blueprint &> /dev/null; then
+    echo -e "${RED}❌ Blueprint not installed${NC}"
+    exit 1
+fi
+
+echo -e "✓ Blueprint is installed"
+
+# Create directories
+echo -e "→ Creating directories..."
+mkdir -p "$PTERO/.blueprint/dev"
+mkdir -p "$PTERO/.blueprint/tmp"
 
 # Copy extension to dev directory
-echo -e "${YELLOW}📋 Copying extension files...${NC}"
-cp -r "$EXTENSION_SOURCE" .blueprint/dev/astrotheme
-echo -e "${GREEN}✓ Extension files copied${NC}"
+DEV_DIR="$PTERO/.blueprint/dev"
 
-# Verify conf.yml exists
-if [ ! -f ".blueprint/dev/astrotheme/conf.yml" ]; then
-    echo -e "${RED}❌ Error: conf.yml not found in extension${NC}"
+# Check if there are OTHER extensions in dev directory
+OTHER_EXTENSIONS=$(find "$DEV_DIR" -maxdepth 1 -mindepth 1 -type d ! -name "astrotheme" 2>/dev/null | head -1)
+
+if [ -n "$OTHER_EXTENSIONS" ]; then
+    echo -e "→ Found other extensions, backing them up..."
+    mkdir -p "$DEV_DIR/.backup"
+    for dir in "$DEV_DIR"/*/; do
+        dirname=$(basename "$dir")
+        if [ "$dirname" != "astrotheme" ] && [ "$dirname" != ".backup" ]; then
+            mv "$dir" "$DEV_DIR/.backup/$dirname"
+        fi
+    done
+fi
+
+# Remove old astrotheme
+if [ -d "$DEV_DIR/astrotheme" ]; then
+    echo -e "→ Removing old version..."
+    rm -rf "$DEV_DIR/astrotheme"
+fi
+
+# Copy extension
+echo -e "→ Copying extension files..."
+cp -r "$SOURCE" "$DEV_DIR/astrotheme"
+
+# Verify files
+if [ ! -f "$DEV_DIR/astrotheme/conf.yml" ]; then
+    echo -e "${RED}❌ conf.yml not found after copy${NC}"
+    echo "Contents of $DEV_DIR/astrotheme:"
+    ls -la "$DEV_DIR/astrotheme/"
     exit 1
 fi
 
-echo -e "${GREEN}✓ conf.yml verified${NC}"
+echo -e "✓ Files copied successfully"
 
-# Check if developer mode is enabled
-echo -e "${YELLOW}🔍 Checking developer mode...${NC}"
-echo -e "${BLUE}ℹ️  Make sure developer mode is enabled in admin panel:${NC}"
-echo "   /admin/extensions → Blueprint → Set 'developer' to true"
+# Show what we copied
 echo ""
-read -p "Is developer mode enabled? (y/n): " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "${RED}❌ Please enable developer mode first, then run this script again${NC}"
-    exit 1
+echo -e "${BLUE}Extension contents:${NC}"
+ls -la "$DEV_DIR/astrotheme/" | grep -v "^total" | grep -v "^\.\." | grep -v "^\.$"
+echo ""
+
+# Now we need to make astrotheme the ONLY thing in dev for blueprint -build
+# Blueprint's -build only works when there's exactly one extension in dev
+
+# Check if there are other extensions
+OTHER_COUNT=$(find "$DEV_DIR" -maxdepth 1 -mindepth 1 -type d ! -name "astrotheme" ! -name ".backup" 2>/dev/null | wc -l)
+
+if [ "$OTHER_COUNT" -gt 0 ]; then
+    echo -e "${YELLOW}⚠ Moving other extensions out of dev temporarily...${NC}"
+    mkdir -p "$DEV_DIR/.backup"
+    for dir in "$DEV_DIR"/*/; do
+        dirname=$(basename "$dir")
+        if [ "$dirname" != "astrotheme" ] && [ "$dirname" != ".backup" ]; then
+            echo "  Moving: $dirname"
+            mv "$dir" "$DEV_DIR/.backup/$dirname"
+        fi
+    done
 fi
 
-# Build the extension
-echo -e "${YELLOW}🔨 Building extension...${NC}"
+# Build from the dev directory
+echo -e "→ Building extension..."
+cd "$DEV_DIR"
+echo -e "  Working directory: $(pwd)"
+echo -e "  Contents: $(ls -1 | tr '\n' ' ')"
+echo ""
+
 if blueprint -build; then
-    echo -e "${GREEN}✓ Extension built successfully${NC}"
+    echo -e "${GREEN}✓ Build successful${NC}"
 else
-    echo -e "${RED}❌ Error: Blueprint build failed${NC}"
-    exit 1
+    echo -e "${RED}❌ Build failed${NC}"
+    
+    # Try alternative: manually copy files
+    echo ""
+    echo -e "${YELLOW}→ Attempting manual installation...${NC}"
+    manual_install "$DEV_DIR/astrotheme" "$PTERO"
+fi
+
+# Restore other extensions
+if [ -d "$DEV_DIR/.backup" ]; then
+    echo -e "→ Restoring other extensions..."
+    for dir in "$DEV_DIR/.backup"/*/; do
+        dirname=$(basename "$dir")
+        if [ -d "$dir" ] && [ ! -d "$DEV_DIR/$dirname" ]; then
+            mv "$dir" "$DEV_DIR/$dirname"
+        fi
+    done
+    rm -rf "$DEV_DIR/.backup"
 fi
 
 # Clear caches
-echo -e "${YELLOW}🧹 Clearing caches...${NC}"
-php artisan view:clear
-php artisan cache:clear
-php artisan config:clear
-echo -e "${GREEN}✓ Caches cleared${NC}"
+echo -e "→ Clearing caches..."
+cd "$PTERO"
+php artisan view:clear > /dev/null 2>&1
+php artisan cache:clear > /dev/null 2>&1
+php artisan config:clear > /dev/null 2>&1
+echo -e "✓ Caches cleared"
 
-# Set permissions
-echo -e "${YELLOW}🔐 Setting permissions...${NC}"
-chown -R www-data:www-data .blueprint/dev/astrotheme 2>/dev/null || chown -R nginx:nginx .blueprint/dev/astrotheme 2>/dev/null || true
-chmod -R 755 .blueprint/dev/astrotheme
-echo -e "${GREEN}✓ Permissions set${NC}"
-
-# Verify installation
-echo -e "${YELLOW}🔍 Verifying installation...${NC}"
-
-# Check if files were copied to the right places
-INSTALLED=true
-
-if [ ! -d "resources/views/admin/extensions/astrotheme" ]; then
-    echo -e "${RED}⚠️  Admin views not found${NC}"
-    INSTALLED=false
-fi
-
-if [ ! -L "public/extensions/astrotheme" ] && [ ! -d "public/extensions/astrotheme" ]; then
-    echo -e "${RED}⚠️  Public assets not found${NC}"
-    INSTALLED=false
-fi
-
-if [ "$INSTALLED" = true ]; then
-    echo -e "${GREEN}✓ Installation verified${NC}"
-fi
-
-# Final summary
+# Success!
 echo ""
-echo -e "${BLUE}"
-echo "╔════════════════════════════════════════════════════════════╗"
-echo "║                                                            ║"
-echo "║              ✅ Installation Complete! ✅                  ║"
-echo "║                                                            ║"
-echo "╚════════════════════════════════════════════════════════════╝"
-echo -e "${NC}"
+echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
+echo -e "${GREEN}║   ✅ Installation Complete!            ║${NC}"
+echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
+echo ""
+echo -e "${BLUE}Next steps:${NC}"
+echo "1. Go to: ${YELLOW}/admin/extensions${NC}"
+echo "2. Click: ${YELLOW}Astro Theme${NC}"
+echo "3. Toggle: ${YELLOW}Enable Theme${NC} → ON"
+echo "4. Click: ${YELLOW}Save Changes${NC}"
+echo ""
+echo -e "${GREEN}🎉 Done!${NC}"
 
-echo -e "${GREEN}Next steps:${NC}"
-echo "1. Go to: ${YELLOW}https://your-panel.com/admin/extensions${NC}"
-echo "2. Click on ${YELLOW}'Astro Theme'${NC}"
-echo "3. Toggle ${YELLOW}'Enable Theme'${NC} to ON"
-echo "4. Click ${YELLOW}'Save Changes'${NC}"
-echo ""
-echo -e "${BLUE}Extension location: ${YELLOW}$PTERO_DIR/.blueprint/dev/astrotheme${NC}"
-echo -e "${BLUE}Admin settings: ${YELLOW}/admin/extensions/astrotheme${NC}"
-echo ""
-echo -e "${GREEN}🎉 Enjoy your new theme!${NC}"
-echo ""
-
-# Ask if user wants to open the admin panel
-read -p "Would you like to see the admin panel URL? (y/n): " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # Try to get the panel URL from .env
-    if [ -f ".env" ]; then
-        APP_URL=$(grep "^APP_URL=" .env | cut -d '=' -f2)
-        if [ -n "$APP_URL" ]; then
-            echo ""
-            echo -e "${YELLOW}Admin panel: ${APP_URL}/admin/extensions/astrotheme${NC}"
-        else
-            echo -e "${YELLOW}Admin panel: https://your-domain.com/admin/extensions/astrotheme${NC}"
-        fi
-    else
-        echo -e "${YELLOW}Admin panel: https://your-domain.com/admin/extensions/astrotheme${NC}"
+# Manual install function (fallback)
+manual_install() {
+    local EXT_DIR="$1"
+    local PTERO="$2"
+    
+    echo "  → Manual install from: $EXT_DIR"
+    
+    # Admin views
+    mkdir -p "$PTERO/resources/views/admin/extensions/astrotheme"
+    cp -r "$EXT_DIR/admin/"* "$PTERO/resources/views/admin/extensions/astrotheme/" 2>/dev/null || true
+    
+    # Admin wrapper
+    mkdir -p "$PTERO/resources/views/blueprint/admin/wrappers"
+    cp "$EXT_DIR/admin/wrapper.blade.php" "$PTERO/resources/views/blueprint/admin/wrappers/astrotheme.blade.php" 2>/dev/null || true
+    
+    # Dashboard wrapper
+    mkdir -p "$PTERO/resources/views/blueprint/dashboard/wrappers"
+    cp "$EXT_DIR/dashboard/wrapper.blade.php" "$PTERO/resources/views/blueprint/dashboard/wrappers/astrotheme.blade.php" 2>/dev/null || true
+    
+    # Dashboard CSS
+    cp "$EXT_DIR/dashboard/dashboard.css" "$PTERO/resources/views/blueprint/dashboard/wrappers/astrotheme.css" 2>/dev/null || true
+    
+    # Public assets (symlink)
+    mkdir -p "$PTERO/public/extensions"
+    if [ -L "$PTERO/public/extensions/astrotheme" ]; then
+        rm "$PTERO/public/extensions/astrotheme"
     fi
-fi
-
-exit 0
+    ln -s "$EXT_DIR/public" "$PTERO/public/extensions/astrotheme"
+    
+    # Views (symlink)
+    mkdir -p "$PTERO/resources/views/blueprint/extensions"
+    if [ -d "$EXT_DIR/views" ]; then
+        if [ -L "$PTERO/resources/views/blueprint/extensions/astrotheme" ]; then
+            rm "$PTERO/resources/views/blueprint/extensions/astrotheme"
+        fi
+        ln -s "$EXT_DIR/views" "$PTERO/resources/views/blueprint/extensions/astrotheme"
+    fi
+    
+    # App (symlink)
+    mkdir -p "$PTERO/app/BlueprintFramework/Extensions"
+    if [ -d "$EXT_DIR/app" ]; then
+        if [ -L "$PTERO/app/BlueprintFramework/Extensions/astrotheme" ]; then
+            rm "$PTERO/app/BlueprintFramework/Extensions/astrotheme"
+        fi
+        ln -s "$EXT_DIR/app" "$PTERO/app/BlueprintFramework/Extensions/astrotheme"
+    fi
+    
+    # Admin CSS
+    if [ -f "$EXT_DIR/admin/admin.css" ]; then
+        mkdir -p "$PTERO/public/extensions/astrotheme/css"
+        cp "$EXT_DIR/admin/admin.css" "$PTERO/public/extensions/astrotheme/css/admin.css"
+    fi
+    
+    # Routes
+    if [ -f "$EXT_DIR/routes/web.php" ]; then
+        mkdir -p "$PTERO/routes/blueprint/web"
+        cp "$EXT_DIR/routes/web.php" "$PTERO/routes/blueprint/web/astrotheme.php"
+    fi
+    
+    echo -e "  ${GREEN}✓ Manual install complete${NC}"
+}
