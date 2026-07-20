@@ -5,6 +5,14 @@
 --}}
 
 @php
+  // Safely check if blueprint service exists
+  $blueprintAvailable = app()->bound('blueprint');
+  
+  if (!$blueprintAvailable) {
+    // Blueprint service not available, skip theme loading
+    return;
+  }
+  
   $astroEnabled = app('blueprint')->dbGet('astrotheme', 'enabled', '1');
   if ($astroEnabled !== '1' && $astroEnabled !== true) return;
 
