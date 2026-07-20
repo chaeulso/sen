@@ -1,0 +1,432 @@
+/* ============================================================
+ * Astro Theme - Component Styles
+ * Toast notifications, modals, dropdowns, stat widgets
+ * ============================================================ */
+
+/* ============================================================
+ * Toast Notifications
+ * ============================================================ */
+.astro-toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 380px;
+  pointer-events: none;
+}
+
+.astro-toast {
+  pointer-events: auto;
+  background: var(--astro-glass-bg-strong);
+  -webkit-backdrop-filter: var(--astro-glass-blur);
+  backdrop-filter: var(--astro-glass-blur);
+  border: 1px solid var(--astro-glass-border);
+  border-radius: 14px;
+  padding: 0.875rem 1rem;
+  box-shadow: var(--astro-shadow-lift);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: astro-slide-in-right 0.3s var(--astro-ease) forwards;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--astro-text);
+}
+
+.astro-toast-success { border-left: 3px solid var(--astro-online); }
+.astro-toast-error { border-left: 3px solid var(--astro-stopped); }
+.astro-toast-warning { border-left: 3px solid var(--astro-starting); }
+.astro-toast-info { border-left: 3px solid var(--astro-accent-1); }
+
+.astro-toast-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.astro-toast-close {
+  flex-shrink: 0;
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--astro-text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.astro-toast-close:hover {
+  background: rgba(120, 145, 220, 0.1);
+}
+
+/* ============================================================
+ * Stat Widgets
+ * ============================================================ */
+.astro-stat-widget {
+  background: var(--astro-glass-bg);
+  -webkit-backdrop-filter: var(--astro-glass-blur);
+  backdrop-filter: var(--astro-glass-blur);
+  border: 1px solid var(--astro-glass-border);
+  border-radius: var(--astro-radius-card);
+  box-shadow: var(--astro-shadow);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform var(--astro-duration-normal) var(--astro-ease),
+              box-shadow var(--astro-duration-normal) var(--astro-ease);
+}
+
+.astro-stat-widget:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--astro-shadow-lift);
+}
+
+.astro-stat-widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.astro-stat-widget-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-image: var(--astro-accent-grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.astro-stat-widget-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--astro-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.astro-stat-widget-value {
+  font-family: var(--astro-font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--astro-text-strong);
+  line-height: 1;
+}
+
+.astro-stat-widget-sub {
+  font-size: 0.75rem;
+  color: var(--astro-text-muted);
+}
+
+/* ============================================================
+ * Modal / Dialog
+ * ============================================================ */
+.astro-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.4);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: astro-fade-in 0.2s ease forwards;
+}
+
+.astro-modal {
+  background: var(--astro-glass-bg-strong);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid var(--astro-glass-border);
+  border-radius: var(--astro-radius-card);
+  box-shadow: 0 24px 64px -24px rgba(48, 87, 196, 0.3);
+  max-width: 560px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: astro-scale-in 0.3s var(--astro-ease) forwards;
+}
+
+.astro-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(120, 145, 220, 0.1);
+}
+
+.astro-modal-title {
+  font-family: var(--astro-font-display);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--astro-text-strong);
+}
+
+.astro-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--astro-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.astro-modal-close:hover {
+  background: rgba(120, 145, 220, 0.1);
+  color: var(--astro-text);
+}
+
+.astro-modal-body {
+  padding: 1.5rem;
+}
+
+.astro-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(120, 145, 220, 0.1);
+}
+
+/* ============================================================
+ * Dropdown Menu
+ * ============================================================ */
+.astro-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.astro-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 100;
+  min-width: 180px;
+  background: var(--astro-glass-bg-strong);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid var(--astro-glass-border);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px -10px rgba(48, 87, 196, 0.2);
+  padding: 0.5rem;
+  animation: astro-scale-in 0.2s ease forwards;
+  transform-origin: top right;
+}
+
+.astro-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--astro-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.astro-dropdown-item:hover {
+  background: rgba(79, 124, 255, 0.08);
+}
+
+.astro-dropdown-item-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+
+.astro-dropdown-divider {
+  height: 1px;
+  background: rgba(120, 145, 220, 0.1);
+  margin: 0.375rem 0;
+}
+
+.astro-dropdown-item-danger {
+  color: var(--astro-stopped);
+}
+
+.astro-dropdown-item-danger:hover {
+  background: rgba(251, 113, 133, 0.08);
+}
+
+/* ============================================================
+ * Loading Spinner
+ * ============================================================ */
+.astro-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(79, 124, 255, 0.15);
+  border-top-color: var(--astro-accent-1);
+  border-radius: 50%;
+  animation: astro-spin 0.8s linear infinite;
+}
+
+.astro-spinner-sm {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+
+.astro-spinner-lg {
+  width: 48px;
+  height: 48px;
+  border-width: 4px;
+}
+
+/* ============================================================
+ * Skeleton Loaders
+ * ============================================================ */
+.astro-skeleton-text {
+  height: 14px;
+  border-radius: 6px;
+  background: rgba(148, 178, 255, 0.14);
+  position: relative;
+  overflow: hidden;
+}
+
+.astro-skeleton-text::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: astro-shimmer 1.7s infinite;
+}
+
+.astro-skeleton-text-sm { height: 10px; width: 60%; }
+.astro-skeleton-text-lg { height: 20px; width: 80%; }
+.astro-skeleton-text-full { width: 100%; }
+
+.astro-skeleton-circle {
+  border-radius: 50%;
+  background: rgba(148, 178, 255, 0.14);
+  position: relative;
+  overflow: hidden;
+}
+
+.astro-skeleton-circle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: astro-shimmer 1.7s infinite;
+}
+
+.astro-skeleton-card {
+  border-radius: var(--astro-radius-card);
+  background: rgba(148, 178, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+}
+
+.astro-skeleton-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: astro-shimmer 1.7s infinite;
+}
+
+/* ============================================================
+ * Activity Feed
+ * ============================================================ */
+.astro-activity-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.astro-activity-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(120, 145, 220, 0.08);
+  align-items: flex-start;
+}
+
+.astro-activity-item:last-child {
+  border-bottom: none;
+}
+
+.astro-activity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.375rem;
+}
+
+.astro-activity-dot-info { background: #60a5fa; }
+.astro-activity-dot_success { background: #34d399; }
+.astro-activity-dot_warning { background: #fbbf24; }
+.astro-activity-dot_danger { background: #fb7185; }
+
+.astro-activity-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.astro-activity-text {
+  font-size: 0.8125rem;
+  color: var(--astro-text);
+  line-height: 1.4;
+}
+
+.astro-activity-time {
+  font-size: 0.6875rem;
+  color: var(--astro-text-muted);
+  margin-top: 0.125rem;
+}
+
+/* ============================================================
+ * Responsive Components
+ * ============================================================ */
+@media (max-width: 639px) {
+  .astro-toast-container {
+    left: 1rem;
+    right: 1rem;
+    max-width: none;
+  }
+  
+  .astro-modal {
+    margin: 0.5rem;
+    max-height: 90vh;
+  }
+  
+  .astro-modal-body {
+    padding: 1rem;
+  }
+  
+  .astro-dropdown-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    border-radius: 16px 16px 0 0;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+}

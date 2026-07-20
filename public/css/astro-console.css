@@ -1,0 +1,406 @@
+/* ============================================================
+ * Astro Theme - Console Page Styles
+ * Terminal, stats bar, command input
+ * ============================================================ */
+
+/* ============================================================
+ * Console Page Container
+ * ============================================================ */
+.astro-console {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ============================================================
+ * Console Header
+ * ============================================================ */
+.astro-console-header {
+  background: var(--astro-glass-bg);
+  -webkit-backdrop-filter: var(--astro-glass-blur);
+  backdrop-filter: var(--astro-glass-blur);
+  border: 1px solid var(--astro-glass-border);
+  border-radius: var(--astro-radius-card);
+  box-shadow: var(--astro-shadow);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.astro-console-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.astro-console-header-title {
+  font-family: var(--astro-font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--astro-text-strong);
+}
+
+.astro-console-header-meta {
+  font-size: 0.75rem;
+  color: var(--astro-text-muted);
+  font-family: var(--astro-font-mono);
+}
+
+/* ============================================================
+ * Console Stats Bar
+ * ============================================================ */
+.astro-console-stats {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.astro-console-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: rgba(120, 145, 220, 0.06);
+  border-radius: 12px;
+  min-width: 80px;
+}
+
+.astro-console-stat-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--astro-text-strong);
+  font-family: var(--astro-font-mono);
+}
+
+.astro-console-stat-label {
+  font-size: 0.625rem;
+  color: var(--astro-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.125rem;
+}
+
+/* ============================================================
+ * Terminal Window
+ * ============================================================ */
+.astro-console-terminal-wrap {
+  background: var(--astro-glass-bg);
+  -webkit-backdrop-filter: var(--astro-glass-blur);
+  backdrop-filter: var(--astro-glass-blur);
+  border: 1px solid var(--astro-glass-border);
+  border-radius: var(--astro-radius-card);
+  box-shadow: var(--astro-shadow);
+  overflow: hidden;
+}
+
+.astro-console-terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(120, 170, 255, 0.1);
+  background: rgba(10, 20, 48, 0.5);
+}
+
+.astro-console-terminal-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.astro-console-terminal-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+
+.astro-console-terminal-status-live {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.astro-console-terminal-status-offline {
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.1);
+}
+
+.astro-console-terminal-actions {
+  display: flex;
+  gap: 0.375rem;
+}
+
+.astro-console-terminal-action {
+  padding: 0.375rem;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.astro-console-terminal-action:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+/* ============================================================
+ * Terminal Output
+ * ============================================================ */
+.astro-console-output {
+  background: var(--astro-terminal-bg);
+  border: 1px solid var(--astro-terminal-border);
+  min-height: 400px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding: 1rem;
+  font-family: var(--astro-font-mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: #e2e8f0;
+}
+
+.astro-console-output::-webkit-scrollbar {
+  width: 6px;
+}
+
+.astro-console-output::-webkit-scrollbar-thumb {
+  background: rgba(110, 150, 255, 0.25);
+  border-radius: 99px;
+}
+
+.astro-console-line {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.125rem 0;
+  font-family: var(--astro-font-mono);
+  font-size: 12px;
+}
+
+.astro-console-line-ts {
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.astro-console-line-source {
+  color: #60a5fa;
+  flex-shrink: 0;
+}
+
+.astro-console-line-level-info { color: #38bdf8; }
+.astro-console-line-level-warn { color: #fbbf24; }
+.astro-console-line-level-error { color: #fb7185; }
+.astro-console-line-level-debug { color: #64748b; }
+.astro-console-line-level-command { color: #67e8f9; }
+.astro-console-line-level-chat { color: #a3e635; }
+
+.astro-console-line-msg {
+  color: #e2e8f0;
+  word-break: break-all;
+  flex: 1;
+}
+
+/* Empty State */
+.astro-console-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #475569;
+  font-family: var(--astro-font-body);
+  gap: 0.75rem;
+}
+
+.astro-console-empty-icon {
+  width: 48px;
+  height: 48px;
+  opacity: 0.3;
+}
+
+/* Loading State */
+.astro-console-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 1rem;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+/* ============================================================
+ * Command Input
+ * ============================================================ */
+.astro-console-input-wrap {
+  background: rgba(10, 20, 48, 0.6);
+  border-top: 1px solid rgba(120, 170, 255, 0.1);
+  padding: 0.75rem 1rem;
+}
+
+.astro-console-suggestions {
+  display: flex;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.astro-console-suggestion {
+  padding: 0.25rem 0.625rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.625rem;
+  font-family: var(--astro-font-mono);
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.astro-console-suggestion:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+}
+
+.astro-console-suggestion:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.astro-console-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(120, 170, 255, 0.12);
+  border-radius: 12px;
+  padding: 0.25rem;
+}
+
+.astro-console-input-prompt {
+  color: #4f7cff;
+  font-family: var(--astro-font-mono);
+  font-size: 0.875rem;
+  padding: 0 0.5rem;
+  flex-shrink: 0;
+}
+
+.astro-console-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--astro-font-mono);
+  font-size: 13px;
+  color: #fff;
+  padding: 0.5rem 0;
+}
+
+.astro-console-input::placeholder {
+  color: #475569;
+}
+
+.astro-console-input:disabled {
+  opacity: 0.4;
+}
+
+.astro-console-input-send {
+  padding: 0.375rem 0.5rem;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: #67e8f9;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.astro-console-input-send:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.astro-console-input-send:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+ * Scroll to Bottom Button
+ * ============================================================ */
+.astro-console-scroll-bottom {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 40;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--astro-glass-bg-strong);
+  -webkit-backdrop-filter: var(--astro-glass-blur);
+  backdrop-filter: var(--astro-glass-blur);
+  border: 1px solid var(--astro-glass-border);
+  box-shadow: var(--astro-shadow-lift);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--astro-accent-1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  animation: astro-scale-in 0.3s ease forwards;
+}
+
+.astro-console-scroll-bottom:hover {
+  transform: scale(1.1);
+}
+
+/* ============================================================
+ * Console Responsive
+ * ============================================================ */
+@media (max-width: 768px) {
+  .astro-console-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .astro-console-stats {
+    width: 100%;
+  }
+  
+  .astro-console-stat {
+    flex: 1;
+    min-width: 70px;
+  }
+  
+  .astro-console-output {
+    min-height: 300px;
+    font-size: 11px;
+  }
+  
+  .astro-console-suggestions {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.25rem;
+  }
+  
+  .astro-console-suggestion {
+    flex-shrink: 0;
+  }
+}

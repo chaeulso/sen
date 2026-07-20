@@ -1,0 +1,42 @@
+# ============================================================
+# Astro Theme — Blueprint Extension for Pterodactyl Panel
+# A modern glassmorphism UI theme with full customization
+# ============================================================
+
+info:
+  name: "Astro Theme"
+  identifier: "astrotheme"
+  description: "A modern glassmorphism dashboard theme for Pterodactyl Panel. Features glass effects, smooth animations, full color customization, SVG backgrounds, live preview, and responsive design."
+  flags: ""
+  version: "1.0.0"
+  target: "beta-2026-01"
+  author: "Astro Theme Contributors"
+  icon: "public/images/icon.svg"
+  website: "https://github.com/astro-theme/pterodactyl"
+
+admin:
+  view: "admin/view.blade.php"
+  controller: "admin/Controller.php"
+  css: "admin/admin.css"
+  wrapper: "admin/wrapper.blade.php"
+
+dashboard:
+  css: "dashboard/dashboard.css"
+  wrapper: "dashboard/wrapper.blade.php"
+  components: ""
+
+data:
+  directory: "data"
+  public: "public"
+  console: ""
+
+requests:
+  views: "views"
+  app: "app"
+  routers:
+    application: ""
+    client: ""
+    web: "routes/web.php"
+
+database:
+  migrations: ""

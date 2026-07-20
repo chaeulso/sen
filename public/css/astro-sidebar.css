@@ -1,0 +1,401 @@
+/* ============================================================
+ * Astro Theme - Sidebar Styles
+ * Navigation, server switcher, user panel
+ * ============================================================ */
+
+/* ============================================================
+ * Sidebar Container
+ * ============================================================ */
+.astro-sidebar {
+  background: var(--astro-glass-bg);
+  -webkit-backdrop-filter: var(--astro-glass-blur);
+  backdrop-filter: var(--astro-glass-blur);
+  border: 1px solid var(--astro-glass-border);
+  border-radius: var(--astro-radius-card);
+  box-shadow: var(--astro-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  width: var(--astro-sidebar-width);
+  height: calc(100vh - 2rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width 0.3s var(--astro-ease);
+}
+
+.astro-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.astro-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(96, 132, 220, 0.2);
+  border-radius: 99px;
+}
+
+/* ============================================================
+ * Sidebar Logo
+ * ============================================================ */
+.astro-sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+
+.astro-sidebar-logo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-image: var(--astro-accent-grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.125rem;
+  font-family: var(--astro-font-display);
+  flex-shrink: 0;
+}
+
+.astro-sidebar-logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.astro-sidebar-logo-title {
+  font-family: var(--astro-font-display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  color: var(--astro-text-strong);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.astro-sidebar-logo-subtitle {
+  font-size: 0.6875rem;
+  color: var(--astro-text-muted);
+  font-weight: 500;
+}
+
+/* ============================================================
+ * Server Switcher
+ * ============================================================ */
+.astro-sidebar-switcher {
+  background: var(--astro-glass-bg-strong);
+  border-radius: 16px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.astro-sidebar-switcher:hover {
+  box-shadow: 0 10px 28px -10px rgba(48, 87, 196, 0.25);
+}
+
+.astro-sidebar-switcher:active {
+  transform: scale(0.98);
+}
+
+.astro-sidebar-switcher-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.astro-sidebar-switcher-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--astro-text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.astro-sidebar-switcher-detail {
+  font-size: 0.6875rem;
+  color: var(--astro-text-muted);
+}
+
+.astro-sidebar-switcher-arrow {
+  flex-shrink: 0;
+  color: var(--astro-text-muted);
+  transition: transform 0.2s ease;
+}
+
+.astro-sidebar-switcher.open .astro-sidebar-switcher-arrow {
+  transform: rotate(180deg);
+}
+
+/* ============================================================
+ * Server List Dropdown
+ * ============================================================ */
+.astro-sidebar-servers {
+  background: var(--astro-glass-bg-strong);
+  border-radius: 16px;
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  max-height: 240px;
+  overflow-y: auto;
+  animation: astro-fade-in 0.2s ease forwards;
+}
+
+.astro-sidebar-server-item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  text-decoration: none;
+  color: var(--astro-text);
+}
+
+.astro-sidebar-server-item:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.astro-sidebar-server-item.active {
+  background-image: linear-gradient(135deg,
+    color-mix(in srgb, var(--astro-accent-1) 13%, transparent),
+    color-mix(in srgb, var(--astro-accent-2) 9%, transparent));
+}
+
+/* ============================================================
+ * Navigation
+ * ============================================================ */
+.astro-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.astro-sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--astro-radius-ctl);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--astro-text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.astro-sidebar-nav-item:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--astro-text-strong);
+}
+
+.astro-sidebar-nav-item.active {
+  background-image: var(--astro-accent-grad);
+  color: #fff;
+  box-shadow: 0 10px 22px -8px rgba(79, 124, 255, 0.7);
+}
+
+.astro-sidebar-nav-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.astro-sidebar-nav-item.active .astro-sidebar-nav-icon {
+  opacity: 1;
+}
+
+.astro-sidebar-nav-badge {
+  margin-left: auto;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  background: rgba(79, 124, 255, 0.15);
+  color: var(--astro-accent-1);
+}
+
+.astro-sidebar-nav-item.active .astro-sidebar-nav-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+/* ============================================================
+ * Cluster Health
+ * ============================================================ */
+.astro-sidebar-cluster {
+  background: var(--astro-glass-bg-strong);
+  border-radius: 16px;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.astro-sidebar-cluster-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--astro-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.astro-sidebar-cluster-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--astro-text);
+  padding: 0.25rem 0;
+}
+
+.astro-sidebar-cluster-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--astro-online);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+ * User Panel (Bottom)
+ * ============================================================ */
+.astro-sidebar-user {
+  background: var(--astro-glass-bg-strong);
+  border-radius: 16px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  margin-top: auto;
+}
+
+.astro-sidebar-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background-image: var(--astro-accent-grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.astro-sidebar-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.astro-sidebar-user-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--astro-text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.astro-sidebar-user-role {
+  font-size: 0.6875rem;
+  color: var(--astro-text-muted);
+}
+
+/* ============================================================
+ * Sidebar Divider
+ * ============================================================ */
+.astro-sidebar-divider {
+  height: 1px;
+  background: rgba(120, 145, 220, 0.15);
+  margin: 0.5rem 0;
+}
+
+/* ============================================================
+ * Sidebar Section Label
+ * ============================================================ */
+.astro-sidebar-section-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--astro-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.5rem 0.875rem 0.25rem;
+}
+
+/* ============================================================
+ * Mobile Overlay
+ * ============================================================ */
+.astro-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.3);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: 99;
+  animation: astro-fade-in 0.2s ease forwards;
+}
+
+/* ============================================================
+ * Sidebar Toggle Button (Mobile)
+ * ============================================================ */
+.astro-sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 98;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--astro-glass-bg);
+  -webkit-backdrop-filter: var(--astro-glass-blur);
+  backdrop-filter: var(--astro-glass-blur);
+  border: 1px solid var(--astro-glass-border);
+  box-shadow: var(--astro-shadow);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--astro-text);
+  transition: all 0.2s ease;
+}
+
+.astro-sidebar-toggle:hover {
+  background: var(--astro-glass-bg-strong);
+}
+
+@media (max-width: 1023px) {
+  .astro-sidebar-toggle {
+    display: flex;
+  }
+}
+
+/* ============================================================
+ * Collapsed Sidebar (Desktop)
+ * ============================================================ */
+.astro-sidebar.collapsed {
+  width: var(--astro-sidebar-collapsed);
+}
+
+.astro-sidebar.collapsed .astro-sidebar-logo-text,
+.astro-sidebar.collapsed .astro-sidebar-switcher-info,
+.astro-sidebar.collapsed .astro-sidebar-nav-badge,
+.astro-sidebar.collapsed .astro-sidebar-cluster,
+.astro-sidebar.collapsed .astro-sidebar-user-info,
+.astro-sidebar.collapsed .astro-sidebar-section-label,
+.astro-sidebar.collapsed .astro-sidebar-switcher-arrow {
+  display: none;
+}
+
+.astro-sidebar.collapsed .astro-sidebar-nav-item {
+  justify-content: center;
+  padding: 0.625rem;
+}

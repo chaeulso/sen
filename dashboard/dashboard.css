@@ -1,0 +1,336 @@
+/* ============================================================
+ * Astro Theme - Dashboard CSS
+ * This file is imported into the React bundle by Blueprint.
+ * Contains CSS overrides for Pterodactyl's dashboard components.
+ * ============================================================ */
+
+/* ============================================================
+ * Global Overrides - Dashboard
+ * These override Pterodactyl's default dashboard styles
+ * ============================================================ */
+
+/* Page background */
+#app > div,
+div[class*="bg-neutral-"],
+div[class*="bg-gray-"] {
+  background-color: var(--astro-page-bg, #edf3ff) !important;
+}
+
+/* Main container background */
+body {
+  background-color: var(--astro-page-bg, #edf3ff) !important;
+  background-image:
+    radial-gradient(1100px 560px at 88% -12%, rgba(124, 194, 255, 0.38), transparent 60%),
+    radial-gradient(900px 520px at -12% 18%, rgba(79, 124, 255, 0.22), transparent 55%),
+    radial-gradient(760px 720px at 55% 112%, rgba(129, 140, 248, 0.16), transparent 60%),
+    linear-gradient(180deg, #f4f8ff 0%, #e9f0fe 100%) !important;
+  background-attachment: fixed !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  color: var(--astro-text, #2b3a67) !important;
+}
+
+/* ============================================================
+ * Card / Panel Overrides
+ * ============================================================ */
+div[class*="rounded-"][class*="bg-"][class*="shadow"],
+div[class*="bg-neutral-"][class*="border"],
+.css-1dbjc4k,
+.css-zyl3sx {
+  background: var(--astro-glass-bg, rgba(255, 255, 255, 0.60)) !important;
+  -webkit-backdrop-filter: var(--astro-glass-blur, blur(20px) saturate(1.5)) !important;
+  backdrop-filter: var(--astro-glass-blur, blur(20px) saturate(1.5)) !important;
+  border: 1px solid var(--astro-color-border, rgba(255, 255, 255, 0.75)) !important;
+  border-radius: var(--astro-radius-card, 24px) !important;
+  box-shadow: 0 8px 32px -8px rgba(48, 87, 196, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+/* Card hover effect */
+div[class*="rounded-"][class*="bg-"][class*="shadow"]:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 20px 48px -14px rgba(48, 87, 196, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ============================================================
+ * Button Overrides
+ * ============================================================ */
+button[class*="bg-cyan"],
+button[class*="bg-blue"],
+a[class*="bg-cyan"],
+a[class*="bg-blue"] {
+  background-image: linear-gradient(135deg, var(--astro-accent-1, #4f7cff), var(--astro-accent-2, #7cc2ff)) !important;
+  background-color: transparent !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 8px 20px -8px rgba(79, 124, 255, 0.7) !important;
+  transition: all 0.2s ease !important;
+}
+
+button[class*="bg-cyan"]:hover,
+button[class*="bg-blue"]:hover {
+  filter: brightness(1.08) !important;
+}
+
+button[class*="bg-cyan"]:active,
+button[class*="bg-blue"]:active {
+  transform: scale(0.95) !important;
+}
+
+/* Danger buttons */
+button[class*="bg-red"],
+button[class*="bg-rose"] {
+  background: #f43f5e !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px -4px rgba(244, 63, 94, 0.5) !important;
+}
+
+/* Ghost/secondary buttons */
+button[class*="bg-transparent"][class*="border"] {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  border-radius: 12px !important;
+  color: var(--astro-text, #2b3a67) !important;
+}
+
+/* ============================================================
+ * Input Overrides
+ * ============================================================ */
+input[class*="bg-neutral"],
+input[class*="bg-gray"],
+textarea[class*="bg-neutral"],
+textarea[class*="bg-gray"],
+select[class*="bg-neutral"],
+select[class*="bg-gray"] {
+  background: rgba(255, 255, 255, 0.65) !important;
+  border: 1px solid rgba(120, 145, 220, 0.30) !important;
+  border-radius: 14px !important;
+  color: #24335e !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--astro-accent-1, #4f7cff) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.14) !important;
+}
+
+/* ============================================================
+ * Text Overrides
+ * ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', 'Inter', sans-serif !important;
+  color: var(--astro-text-strong, #1e2a52) !important;
+  font-weight: 700 !important;
+}
+
+p, span, label {
+  color: var(--astro-text, #2b3a67) !important;
+}
+
+/* Muted text */
+p[class*="text-neutral-400"],
+span[class*="text-neutral-400"],
+p[class*="text-gray-400"],
+span[class*="text-gray-400"] {
+  color: var(--astro-color-muted, #8ba0d8) !important;
+}
+
+/* Links */
+a[class*="text-cyan"],
+a[class*="text-blue"] {
+  color: var(--astro-accent-1, #4f7cff) !important;
+}
+
+a[class*="text-cyan"]:hover,
+a[class*="text-blue"]:hover {
+  color: var(--astro-accent-2, #7cc2ff) !important;
+}
+
+/* ============================================================
+ * Status Indicators
+ * ============================================================ */
+
+/* Online status */
+span[class*="text-green"],
+div[class*="text-green"] {
+  color: #059669 !important;
+}
+
+/* Offline/stopped status */
+span[class*="text-red"],
+div[class*="text-red"] {
+  color: #e11d48 !important;
+}
+
+/* Starting/warning status */
+span[class*="text-yellow"],
+span[class*="text-amber"] {
+  color: #d97706 !important;
+}
+
+/* ============================================================
+ * Progress Bars
+ * ============================================================ */
+div[class*="bg-cyan"][class*="h-"],
+div[style*="background-color"][class*="h-"] {
+  background-image: linear-gradient(135deg, var(--astro-accent-1, #4f7cff), var(--astro-accent-2, #7cc2ff)) !important;
+  background-color: transparent !important;
+  border-radius: 999px !important;
+}
+
+/* Progress bar background */
+div[class*="bg-neutral-"][class*="h-"][class*="rounded"] {
+  background: rgba(120, 145, 220, 0.18) !important;
+  border-radius: 999px !important;
+}
+
+/* ============================================================
+ * Console/Terminal Overrides
+ * ============================================================ */
+div[class*="font-mono"][class*="bg-neutral-900"],
+div[class*="font-mono"][class*="bg-gray-900"],
+div[class*="terminal"],
+div[class*="console"] {
+  background: linear-gradient(180deg, #0a1430 0%, #0c1838 100%) !important;
+  border: 1px solid rgba(120, 170, 255, 0.16) !important;
+  border-radius: var(--astro-radius-card, 24px) !important;
+  box-shadow: 0 24px 64px -24px rgba(10, 25, 70, 0.5), inset 0 1px 0 rgba(148, 197, 255, 0.07) !important;
+  font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+  color: #e2e8f0 !important;
+}
+
+/* ============================================================
+ * Navigation Overrides
+ * ============================================================ */
+nav[class*="bg-neutral"],
+nav[class*="bg-gray"],
+aside[class*="bg-neutral"],
+aside[class*="bg-gray"] {
+  background: var(--astro-glass-bg, rgba(255, 255, 255, 0.60)) !important;
+  -webkit-backdrop-filter: var(--astro-glass-blur, blur(20px) saturate(1.5)) !important;
+  backdrop-filter: var(--astro-glass-blur, blur(20px) saturate(1.5)) !important;
+  border: 1px solid var(--astro-color-border, rgba(255, 255, 255, 0.75)) !important;
+  border-radius: var(--astro-radius-card, 24px) !important;
+  box-shadow: 0 8px 32px -8px rgba(48, 87, 196, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Active nav items */
+a[class*="text-cyan"][class*="bg-cyan"],
+a[class*="active"][class*="bg-cyan"],
+nav a[class*="bg-neutral-800"],
+nav a[class*="bg-gray-800"] {
+  background-image: linear-gradient(135deg, var(--astro-accent-1, #4f7cff), var(--astro-accent-2, #7cc2ff)) !important;
+  background-color: transparent !important;
+  border-radius: 12px !important;
+  color: #fff !important;
+  box-shadow: 0 10px 22px -8px rgba(79, 124, 255, 0.7) !important;
+}
+
+/* ============================================================
+ * Table Overrides
+ * ============================================================ */
+table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+th, td {
+  border-color: rgba(120, 145, 220, 0.1) !important;
+}
+
+tr:hover td {
+  background: rgba(79, 124, 255, 0.04) !important;
+}
+
+/* ============================================================
+ * Modal Overrides
+ * ============================================================ */
+div[class*="modal"],
+div[role="dialog"] {
+  backdrop-filter: blur(8px) !important;
+}
+
+div[class*="modal"] > div:first-child,
+div[role="dialog"] > div:first-child {
+  background: var(--astro-glass-bg-strong, rgba(249, 251, 255, 0.86)) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
+  backdrop-filter: blur(24px) saturate(1.5) !important;
+  border: 1px solid var(--astro-color-border, rgba(255, 255, 255, 0.75)) !important;
+  border-radius: var(--astro-radius-card, 24px) !important;
+  box-shadow: 0 24px 64px -24px rgba(48, 87, 196, 0.3) !important;
+}
+
+/* ============================================================
+ * Dropdown Overrides
+ * ============================================================ */
+div[class*="dropdown"],
+div[role="menu"] {
+  background: var(--astro-glass-bg-strong, rgba(249, 251, 255, 0.86)) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
+  backdrop-filter: blur(24px) saturate(1.5) !important;
+  border: 1px solid var(--astro-color-border, rgba(255, 255, 255, 0.75)) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 40px -10px rgba(48, 87, 196, 0.2) !important;
+}
+
+div[role="menuitem"]:hover {
+  background: rgba(79, 124, 255, 0.08) !important;
+}
+
+/* ============================================================
+ * Scrollbar Overrides
+ * ============================================================ */
+::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(96, 132, 220, 0.35) !important;
+  border-radius: 99px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(96, 132, 220, 0.55) !important;
+}
+
+/* ============================================================
+ * Selection
+ * ============================================================ */
+::selection {
+  background: rgba(79, 124, 255, 0.22) !important;
+}
+
+/* ============================================================
+ * Dark Mode Dashboard Overrides
+ * ============================================================ */
+.astro-dark body,
+body.astro-dark {
+  background-color: #0f1729 !important;
+  background-image:
+    radial-gradient(1100px 560px at 88% -12%, rgba(124, 194, 255, 0.12), transparent 60%),
+    radial-gradient(900px 520px at -12% 18%, rgba(79, 124, 255, 0.08), transparent 55%),
+    linear-gradient(180deg, #0f1729 0%, #1a2744 100%) !important;
+  color: #e2e8f0 !important;
+}
+
+.astro-dark div[class*="bg-neutral"],
+.astro-dark div[class*="bg-gray"] {
+  background-color: transparent !important;
+}
+
+.astro-dark h1, .astro-dark h2, .astro-dark h3,
+.astro-dark h4, .astro-dark h5, .astro-dark h6 {
+  color: #f1f5f9 !important;
+}
+
+.astro-dark p, .astro-dark span, .astro-dark label {
+  color: #e2e8f0 !important;
+}

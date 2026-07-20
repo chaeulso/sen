@@ -1,0 +1,297 @@
+/* ============================================================
+ * Astro Theme - Login Page Styles
+ * Custom login page with glassmorphism and animations
+ * ============================================================ */
+
+/* ============================================================
+ * Login Page Container
+ * ============================================================ */
+.astro-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================================================
+ * Login Background
+ * ============================================================ */
+.astro-login-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--astro-page-bg);
+  background-image:
+    radial-gradient(1100px 560px at 88% -12%, rgba(124, 194, 255, 0.38), transparent 60%),
+    radial-gradient(900px 520px at -12% 18%, rgba(79, 124, 255, 0.22), transparent 55%),
+    radial-gradient(760px 720px at 55% 112%, rgba(129, 140, 248, 0.16), transparent 60%),
+    linear-gradient(180deg, #f4f8ff 0%, #e9f0fe 100%);
+  background-attachment: fixed;
+}
+
+.astro-login-bg-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.astro-login-bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: rgba(15, 23, 42, 0.4);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* ============================================================
+ * Login Card
+ * ============================================================ */
+.astro-login-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem;
+  animation: astro-login-appear 0.6s var(--astro-ease) forwards;
+}
+
+@keyframes astro-login-appear {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+ * Login Logo
+ * ============================================================ */
+.astro-login-logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.astro-login-logo img {
+  max-width: 180px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.astro-login-logo-text {
+  font-family: var(--astro-font-display);
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--astro-text-strong);
+  letter-spacing: -0.02em;
+}
+
+.astro-login-logo-subtitle {
+  font-size: 0.875rem;
+  color: var(--astro-text-muted);
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+ * Login Form
+ * ============================================================ */
+.astro-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.astro-login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.astro-login-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--astro-text-strong);
+  letter-spacing: 0.01em;
+}
+
+.astro-login-input {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(120, 145, 220, 0.30);
+  background: rgba(255, 255, 255, 0.65);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: #24335e;
+  outline: none;
+  transition: border-color var(--astro-duration-fast) ease,
+              box-shadow var(--astro-duration-fast) ease,
+              background var(--astro-duration-fast) ease;
+}
+
+.astro-login-input::placeholder {
+  color: var(--astro-text-muted);
+}
+
+.astro-login-input:focus {
+  border-color: var(--astro-accent-1);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.14);
+}
+
+/* ============================================================
+ * Login Button
+ * ============================================================ */
+.astro-login-btn {
+  width: 100%;
+  padding: 0.875rem;
+  border-radius: 14px;
+  border: none;
+  background-image: var(--astro-accent-grad);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -8px rgba(79, 124, 255, 0.7);
+  transition: all var(--astro-duration-fast) ease;
+  margin-top: 0.5rem;
+}
+
+.astro-login-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px -8px rgba(79, 124, 255, 0.5);
+}
+
+.astro-login-btn:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================
+ * Login Footer
+ * ============================================================ */
+.astro-login-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--astro-text-muted);
+}
+
+.astro-login-footer a {
+  color: var(--astro-accent-1);
+  text-decoration: none;
+  transition: color var(--astro-duration-fast) ease;
+}
+
+.astro-login-footer a:hover {
+  color: var(--astro-accent-2);
+}
+
+/* ============================================================
+ * Remember Me / Forgot Password
+ * ============================================================ */
+.astro-login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.astro-login-remember {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--astro-text);
+  cursor: pointer;
+}
+
+.astro-login-forgot {
+  color: var(--astro-accent-1);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--astro-duration-fast) ease;
+}
+
+.astro-login-forgot:hover {
+  color: var(--astro-accent-2);
+}
+
+/* ============================================================
+ * Error Message
+ * ============================================================ */
+.astro-login-error {
+  background: rgba(244, 63, 94, 0.10);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: #e11d48;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ============================================================
+ * Responsive Login
+ * ============================================================ */
+@media (max-width: 639px) {
+  .astro-login-page {
+    padding: 1rem;
+  }
+  
+  .astro-login-card {
+    padding: 1.75rem;
+  }
+  
+  .astro-login-logo-text {
+    font-size: 1.5rem;
+  }
+  
+  .astro-login-logo img {
+    max-width: 140px;
+  }
+}
+
+/* ============================================================
+ * Login Particles Background
+ * ============================================================ */
+.astro-login-particles {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.astro-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--astro-accent-1);
+  opacity: 0.15;
+  animation: astro-particle-float 20s linear infinite;
+}
+
+@keyframes astro-particle-float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.15;
+  }
+  90% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translate(100px, -100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
