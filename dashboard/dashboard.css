@@ -30,6 +30,61 @@ body {
 }
 
 /* ============================================================
+ * Sidebar Overrides - Match Astro Design
+ * ============================================================ */
+
+/* Main sidebar container */
+nav[class*="fixed"],
+aside[class*="fixed"],
+div[class*="sidebar"],
+nav[role="navigation"] {
+  background: var(--astro-glass-bg, rgba(255, 255, 255, 0.60)) !important;
+  -webkit-backdrop-filter: var(--astro-glass-blur, blur(20px) saturate(1.5)) !important;
+  backdrop-filter: var(--astro-glass-blur, blur(20px) saturate(1.5)) !important;
+  border: 1px solid var(--astro-color-border, rgba(255, 255, 255, 0.75)) !important;
+  border-radius: var(--astro-radius-card, 24px) !important;
+  box-shadow: 0 8px 32px -8px rgba(48, 87, 196, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  margin: 1rem !important;
+  padding: 1.25rem !important;
+}
+
+/* Sidebar links */
+nav a,
+aside a,
+nav button,
+aside button {
+  border-radius: var(--astro-radius-ctl, 12px) !important;
+  transition: all 0.2s ease !important;
+  font-weight: 600 !important;
+}
+
+nav a:hover,
+aside a:hover,
+nav button:hover,
+aside button:hover {
+  background: rgba(255, 255, 255, 0.5) !important;
+  transform: translateX(2px);
+}
+
+/* Active sidebar link */
+nav a[class*="active"],
+nav a[aria-current="page"],
+aside a[class*="active"],
+aside a[aria-current="page"] {
+  background-image: var(--astro-accent-grad) !important;
+  background-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 10px 22px -8px rgba(79, 124, 255, 0.7) !important;
+}
+
+/* Sidebar icons */
+nav svg,
+aside svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* ============================================================
  * Card / Panel Overrides
  * ============================================================ */
 div[class*="rounded-"][class*="bg-"][class*="shadow"],
@@ -200,33 +255,6 @@ div[class*="console"] {
   box-shadow: 0 24px 64px -24px rgba(10, 25, 70, 0.5), inset 0 1px 0 rgba(148, 197, 255, 0.07) !important;
   font-family: 'JetBrains Mono', ui-monospace, monospace !important;
   color: #e2e8f0 !important;
-}
-
-/* ============================================================
- * Navigation Overrides
- * ============================================================ */
-nav[class*="bg-neutral"],
-nav[class*="bg-gray"],
-aside[class*="bg-neutral"],
-aside[class*="bg-gray"] {
-  background: var(--astro-glass-bg, rgba(255, 255, 255, 0.60)) !important;
-  -webkit-backdrop-filter: var(--astro-glass-blur, blur(20px) saturate(1.5)) !important;
-  backdrop-filter: var(--astro-glass-blur, blur(20px) saturate(1.5)) !important;
-  border: 1px solid var(--astro-color-border, rgba(255, 255, 255, 0.75)) !important;
-  border-radius: var(--astro-radius-card, 24px) !important;
-  box-shadow: 0 8px 32px -8px rgba(48, 87, 196, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
-}
-
-/* Active nav items */
-a[class*="text-cyan"][class*="bg-cyan"],
-a[class*="active"][class*="bg-cyan"],
-nav a[class*="bg-neutral-800"],
-nav a[class*="bg-gray-800"] {
-  background-image: linear-gradient(135deg, var(--astro-accent-1, #4f7cff), var(--astro-accent-2, #7cc2ff)) !important;
-  background-color: transparent !important;
-  border-radius: 12px !important;
-  color: #fff !important;
-  box-shadow: 0 10px 22px -8px rgba(79, 124, 255, 0.7) !important;
 }
 
 /* ============================================================
