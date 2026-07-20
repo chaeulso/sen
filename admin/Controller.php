@@ -10,20 +10,14 @@ namespace Pterodactyl\Http\Controllers\Admin\Extensions\astrotheme;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\Factory;
-use Pterodactyl\Http\Controllers\Admin\AdminController;
-use Pterodactyl\Http\Requests\Admin\AdminFormRequest;
+use Illuminate\Routing\Controller as BaseController;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use BlueprintFramework\Services\Blueprint\BlueprintService;
 
-class astrothemeExtensionController extends AdminController
+class astrothemeExtensionController extends BaseController
 {
-    /** @var BlueprintService */
-    protected BlueprintService $blueprint;
-
-    /** @var Factory */
-    protected Factory $view;
-
-    /** Default settings values */
+    /**
+     * Default settings values
+     */
     private const DEFAULTS = [
         'enabled'           => '1',
         'dark_mode'         => '0',
@@ -74,25 +68,24 @@ class astrothemeExtensionController extends AdminController
         'bg_blur'           => '0',
     ];
 
-    public function __construct(BlueprintService $blueprint, Factory $view)
-    {
-        $this->blueprint = $blueprint;
-        $this->view = $view;
-    }
-
     /**
      * Display the settings page (GET /admin/extensions/astrotheme)
      */
     public function index(Request $request)
     {
-        $this->assertRootAdmin($request);
-
-        $settings = [];
-        foreach (self::DEFAULTS as $key => $default) {
-            $settings[$key] = $this->blueprint->dbGet('astrotheme', $key, $default);
+        // Check if user is root admin
+        if (!$request->user() || !$request->user()->root_admin) {
+            throw new AccessDeniedHttpException();
         }
 
-        return $this->view->make('admin.extensions.astrotheme.index', [
+        $blueprint = app()->bound('blueprint') ? app('blueprint') : null;
+        
+        $settings = [];
+        foreach (self::DEFAULTS as $key => $default) {
+            $settings[$key] = $blueprint ? $blueprint->dbGet('astrotheme', $key, $default) : $default;
+        }
+
+        return view('admin.extensions.astrotheme.index', [
             'settings'  => $settings,
             'defaults'  => self::DEFAULTS,
             'root'      => '/admin/extensions/astrotheme',
@@ -104,7 +97,18 @@ class astrothemeExtensionController extends AdminController
      */
     public function update(Request $request): RedirectResponse
     {
-        $this->assertRootAdmin($request);
+        // Check if user is root admin
+        if (!$request->user() || !$request->user()->root_admin) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $blueprint = app()->bound('blueprint') ? app('blueprint') : null;
+        
+        if (!$blueprint) {
+            return redirect()
+                ->route('admin.extensions')
+                ->with('error', 'Blueprint service not available.');
+        }
 
         $identifier = 'astrotheme';
         $allKeys = array_keys(self::DEFAULTS);
@@ -120,7 +124,7 @@ class astrothemeExtensionController extends AdminController
                     $value = '/storage/' . $path;
                 }
 
-                $this->blueprint->dbSet($identifier, $key, $value);
+                $blueprint->dbSet($identifier, $key, $value);
             }
         }
 
@@ -134,12 +138,23 @@ class astrothemeExtensionController extends AdminController
      */
     public function post(Request $request): RedirectResponse
     {
-        $this->assertRootAdmin($request);
+        // Check if user is root admin
+        if (!$request->user() || !$request->user()->root_admin) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $blueprint = app()->bound('blueprint') ? app('blueprint') : null;
+        
+        if (!$blueprint) {
+            return redirect()
+                ->route('admin.extensions')
+                ->with('error', 'Blueprint service not available.');
+        }
 
         $action = $request->input('action', 'save');
 
         if ($action === 'reset') {
-            $this->resetToDefaults();
+            $this->resetToDefaults($blueprint);
             return redirect()
                 ->route('admin.extensions.astrotheme.index')
                 ->with('success', 'Astro Theme settings reset to defaults.');
@@ -149,7 +164,7 @@ class astrothemeExtensionController extends AdminController
             if ($request->hasFile('svg_file')) {
                 $file = $request->file('svg_file');
                 $svgContent = file_get_contents($file->getRealPath());
-                $layers = json_decode($this->blueprint->dbGet('astrotheme', 'svg_layers', '[]'), true) ?: [];
+                $layers = json_decode($blueprint->dbGet('astrotheme', 'svg_layers', '[]'), true) ?: [];
                 $layers[] = [
                     'id' => uniqid('svg_'),
                     'svg' => $svgContent,
@@ -161,7 +176,7 @@ class astrothemeExtensionController extends AdminController
                     'enabled' => true,
                     'width' => '300px',
                 ];
-                $this->blueprint->dbSet('astrotheme', 'svg_layers', json_encode($layers));
+                $blueprint->dbSet('astrotheme', 'svg_layers', json_encode($layers));
             }
         }
 
@@ -175,12 +190,23 @@ class astrothemeExtensionController extends AdminController
      */
     public function delete(Request $request, string $target, string $id): RedirectResponse
     {
-        $this->assertRootAdmin($request);
+        // Check if user is root admin
+        if (!$request->user() || !$request->user()->root_admin) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $blueprint = app()->bound('blueprint') ? app('blueprint') : null;
+        
+        if (!$blueprint) {
+            return redirect()
+                ->route('admin.extensions')
+                ->with('error', 'Blueprint service not available.');
+        }
 
         if ($target === 'svg_layer') {
-            $layers = json_decode($this->blueprint->dbGet('astrotheme', 'svg_layers', '[]'), true) ?: [];
+            $layers = json_decode($blueprint->dbGet('astrotheme', 'svg_layers', '[]'), true) ?: [];
             $layers = array_values(array_filter($layers, fn($l) => ($l['id'] ?? '') !== $id));
-            $this->blueprint->dbSet('astrotheme', 'svg_layers', json_encode($layers));
+            $blueprint->dbSet('astrotheme', 'svg_layers', json_encode($layers));
         }
 
         return redirect()
@@ -191,20 +217,10 @@ class astrothemeExtensionController extends AdminController
     /**
      * Reset all settings to defaults
      */
-    private function resetToDefaults(): void
+    private function resetToDefaults($blueprint): void
     {
         foreach (self::DEFAULTS as $key => $default) {
-            $this->blueprint->dbSet('astrotheme', $key, $default);
-        }
-    }
-
-    /**
-     * Ensure the requesting user is a root admin
-     */
-    private function assertRootAdmin(Request $request): void
-    {
-        if (!$request->user() || !$request->user()->root_admin) {
-            throw new AccessDeniedHttpException();
+            $blueprint->dbSet('astrotheme', $key, $default);
         }
     }
 }
