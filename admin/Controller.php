@@ -80,6 +80,11 @@ class astrothemeExtensionController extends BaseController
 
         $blueprint = app()->bound('blueprint') ? app('blueprint') : null;
         
+        // Share blueprint variable globally for Blueprint's template
+        if ($blueprint) {
+            view()->share('blueprint', $blueprint);
+        }
+        
         $settings = [];
         foreach (self::DEFAULTS as $key => $default) {
             $settings[$key] = $blueprint ? $blueprint->dbGet('astrotheme', $key, $default) : $default;
